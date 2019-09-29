@@ -1,5 +1,5 @@
 /**
- *  _                 _       _                   
+ * main
  * | |               | |     | |                  
  * | |__   ___   ___ | |_ ___| |_ _ __ __ _ _ __  
  * | '_ \ / _ \ / _ \| __/ __| __| '__/ _` | '_ \ 
@@ -63,9 +63,9 @@ svg {
   outline: none;
   background-color: transparent;
 }
-.pc-lg {
+.sel-lg {
   font-size:.25rem;
-  letter-spacing: .15rem;
+  letter-spacing: .05rem;
 }
 
 .lang-active {
@@ -267,6 +267,19 @@ section.section {
   font-family:Source Han Sans CN;
   font-weight:bold;
   color:rgba(36,37,40,1);
+}
+
+.icon-socail {
+  width: 3.25rem;
+  height: 3.25rem;
+  vertical-align: -.15em;
+  fill:currentColor;
+  overflow: hidden;
+}
+
+.svg-logo-footer {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .footer-bg {

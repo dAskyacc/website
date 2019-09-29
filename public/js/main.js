@@ -39,4 +39,7 @@
   navbarCollapse();
   // Collapse the navbar when page is scrolled
   $(window).scroll(navbarCollapse);   
+
+  var i18n = new I18n('en');
+  i18n.indexInit();
 })(jQuery);

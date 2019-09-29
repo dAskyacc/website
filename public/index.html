@@ -88,9 +88,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger sel-lang">
-              <span class="pc-lg i18n lang-active" data-en="English" data-cn="英文">English</span>
+              <span class="sel-lg i18n lang-active" data-lg="en" data-en="English" data-cn="英文">English</span>
               <span class="vertical">|</span>
-              <span class="pc-lg i18n" data-en="Chinese" data-cn="中文">中文</span>
+              <span class="sel-lg i18n" data-lg="cn" data-en="Chinese" data-cn="中文">中文</span>
             </a>
           </li>
         </ul>
@@ -211,25 +211,17 @@
             </h3>            
             <div class="row mt-4">
               <p class="small">
-                2008年のiPhone発売（※）以降、スマートフォンと過ごす生活は、すっかり当たり前のものとなり、
-                “スマホ依存”という言葉まで生まれました。
-                現在、スマホは生活の一部となり、スマホ市場は成熟し、ポストスマホとなるコンシューマーIoTの
-                浸透がはじまりました。
-                IoTを用いると、企業は人々の生活におけるストレスや手間といった摩擦を限りなくゼロに近づける
-                ことができます。
-                その結果、どんどん生活者は毎日が快適になっていく実感を得るようになるでしょう。
-                コンシューマーIoT、それは生活を快適にするテクノロジーであり、
-                生活者にとって単なるデバイスから生活の一部になったスマホ以上に、生活の中に浸透していくもの
-                です。                        
+                        
               </p>  
             </div>
             <div class="col-12 justify-content-center align-items-center pt-4 text-center">
               <a href="#minner-section" class="col-lg-3 col-sm-12 btn btn-primary i18n" 
-
+              data-en=" Get Program" data-cn="获取矿池/矿机程序"
               data-dl="user-handbook">
                 Get Program
               </a>
               <a href="#minner-section" class="col-lg-3 col-sm-12 btn btn-primary i18n" 
+              data-en="Get User Manual" data-cn="获取用户手册"
               data-dl="user-handbook">
                 Get User Manual
               </a>
@@ -247,10 +239,14 @@
   </section>
 
   <section class="footer-bg" id="contact-section">
-    <div class="container ">
-      <div class="row justify-content-center">
+    <div class="container">
+      <div class="row">
         <div class="col-lg-3 col-md-4 col-xs-12">
-          
+          <a href="https://github.com/hyperorchidlab" target="github">
+            <svg class="icon icon-socail">
+              <use xlink:href="#github-color"></use>
+            </svg>
+          </a>
         </div>
 
         <div class="col-lg-5 col-md-8 col-xs-12">
@@ -258,16 +254,13 @@
         </div>
 
         <div class="col-lg-4 d-none d-lg-block">
-          <div class="container">
-            <div class="row align-items-center">
-              <svg class="icon logo-footer" aria-hidden="true">
-                <use xlink:href="#icon-pangolin"></use>   
-              </svg>
-              <h3 class="logo-title d-none d-lg-block">Hyperorchid</h3>
-            </div>
-          </div>
+          <svg class="icon svg-logo-footer" aria-hidden="true">
+            <use xlink:href="#pc-green"></use>   
+          </svg>
+          <span class="logo-title d-none d-lg-block">Hyperorchid</span>
         </div>
       </div>
+
     </div>  
   </section>
 
@@ -281,6 +274,7 @@
 <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script type="text/javascript" src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="js/index-bundle.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
