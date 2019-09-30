@@ -10,3 +10,15 @@
  * git@flash:hyperorchidlab/website.git
  *
  */
+'use strict';
+
+const C = {
+  TMP:"tmp",
+  DIST:'dist'
+
+}
+const Version = require('../package.json').version;
+var fs = require('fs');
+var path = require('path');
+var shell = require('shelljs');
+var zip = require('bestzip');
