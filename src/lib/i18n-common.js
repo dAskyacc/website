@@ -1,7 +1,7 @@
 
 'use strict';
 
-const V = "0.0.1";
+const V = "0.1.0";
 const CDEF = {
 	i18nSelector:".i18n",
 	imgSrc:"src",
