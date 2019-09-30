@@ -134,10 +134,12 @@ function zipDest(){
 
   zip(opt).then(function(){
     console.log('Zip Completed.');
+    
+    shell.cd(IEnv.BASE_DIR);
   }).catch(err=>{
     console.log('Error:',err.message);
+    shell.cd(IEnv.BASE_DIR);
   });
-
 }
 
 
@@ -154,6 +156,3 @@ function comboName(preffix,version,suffix){
   return name;
 }
 
-function writePublishReadme(fileName){
-
-}
