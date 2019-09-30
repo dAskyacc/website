@@ -17,6 +17,15 @@ const C = {
   "buildMode":"zip"
 }
 
+/**
+ * ENV config like this
+ * REMOTE_HOST=xx.x.x.x
+ * REMOTE_PORT=22
+ * REMOTE_USER=root
+ * REMOTE_DEST_HOME=/opt/nginx
+ * REMOTE_DEST_WWW=/opt/nginx/www
+ * SSH_KEY=vultr_nbs
+ */
 const os = require('os');
 const Version = require('../package.json').version;
 const APP_NAME = require('../package.json').name || 'hyperorchid';
