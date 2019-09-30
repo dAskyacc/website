@@ -34,7 +34,6 @@ class I18n {
 
 		$(_ctx.langSelector).on('click',function(event){
 			let curLg = $(this).data('lg');
-			console.log('>>>',curLg);
 			let activeClz = _ctx.langActiveClazz || CDEF.langActiveClazz;
 			if(!$(this).hasClass(activeClz)){
 				$(_ctx.i18nSelector).removeClass(activeClz);
@@ -53,6 +52,15 @@ class I18n {
 
 			if(text){
 				$(el).text(text);
+			}
+			let imgSrc = $(el).data(lg+that.ctx.imgSrc);
+			if(imgSrc){
+				$(el).attr('src',imgSrc);
+			}
+
+			let hrefUrl = $(el).data(lg+that.ctx.aHref);
+			if(hrefUrl){
+				$(el).attr('href',hrefUrl);
 			}
 		});
 	}

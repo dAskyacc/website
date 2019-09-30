@@ -13,6 +13,7 @@
  * git@flash:hyperorchidlab/website.git
  *
  */
+html { box-sizing: border-box }
 body {
   color: #27262C;
 }
@@ -269,6 +270,34 @@ section.section {
   color:rgba(36,37,40,1);
 }
 
+
+.social a {
+  text-align: center;
+  height: 3rem;
+  width: 3rem;
+  background: rgba(23,43,113,0.75);
+  border-radius: 100%;
+  line-height: 3rem;
+  color: rgba(255, 255, 255, 0.85);  
+}
+
+.social a:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.social a:active {
+  color: #fff;
+}
+
+.contact-section .logo-title {
+  font-family:EngraversGothicBT;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  background:linear-gradient(266deg,rgba(48,199,246,1) 20.21484375%, rgba(113,20,189,1) 97.65625%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
 .icon-socail {
   width: 3.25rem;
   height: 3.25rem;
@@ -278,10 +307,22 @@ section.section {
 }
 
 .svg-logo-footer {
-  width: 2.5rem;
-  height: 2.5rem;
+    width:3.25rem;
+    height:3.25rem;
+    margin-top: 0.25rem;
+    padding: 0.125rem 0;
 }
 
 .footer-bg {
   background:linear-gradient(25deg,rgba(232,233,237,1),rgba(239,241,246,1));
 }
+
+@media (max-width: 375) {
+  .d-xxs-none {
+    display: none !important;
+  }
+} 
+
+.d-xxs-none {
+  display: none !important;
+} 
