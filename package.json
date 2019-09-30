@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "clean:web": "rm -rf build/*",
+    "clean:web": "rm -rf build/* && rm -rf tmp/*",
     "rebuild": "npm run clean:web && npm run browserify:js",
     "browserify:js": "browserify src/index.js -dv -o build/js/index-bundle.js",
     "watchify:js": "watchify src/index.js -o build/js/index-bundle.js --dv",
