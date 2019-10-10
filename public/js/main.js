@@ -52,6 +52,23 @@
   // Collapse the navbar when page is scrolled
   $(window).scroll(navbarCollapse);   
 
+
+  var Clipboard = new ClipboardJS('#copyEmailBtn',{
+    text:function(trigger){
+      var t = $("#supportMail").text();
+      return t;
+    }
+  });
+
+  Clipboard.on('success',e =>{
+    console.log('action',e.action);
+    $('#copyedTips').removeClass('d-none');
+    setTimeout(function(){
+       $('#copyedTips').addClass('d-none');
+    },3000);
+  });
+
+
   var i18n = new I18n('en');
   i18n.indexInit();
 })(jQuery);

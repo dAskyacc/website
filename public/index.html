@@ -247,6 +247,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="#sdk-section" data-en="Apply for SDK" data-cn="申请SDK"
+            class="nav-link js-scroll-trigger i18n">
+              Apply for SDK 
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link js-scroll-trigger sel-lang">
               <span class="sel-lg i18n lang-active" data-lg="en" data-en="English" data-cn="英文">English</span>
               <span class="vertical">|</span>
@@ -405,12 +411,12 @@
 
       <div class="row justify-content-center align-items-center">
         <div class="col-lg-8 col-sm-12">
+          <h3 class="section-title i18n" data-en="About Mining Pool" data-cn="矿池介绍">
+            About Mining Pool
+          </h3> 
           <div class="container">
-            <h3 class="section-title i18n" data-en="About Mining Pool" data-cn="矿池介绍">
-              About Mining Pool
-            </h3>            
             <div class="row mt-4">
-              <p class="small">
+              <p class="small minner-about-content">
                        
               </p>  
             </div>
@@ -437,6 +443,41 @@
       </div>
     </div>
   </section>
+
+  <!-- SDK -->
+  <section id="sdk-section" class="section sdk-section"  >
+    <div class="container">
+      <h3 class="section-title i18n" data-en="Apply for SDK" data-cn="SDK申请">
+        Apply for SDK
+      </h3>
+      <div class="col-12 justify-content-center align-items-center" >
+        <span class="i18n" data-cn="申请SDK:" data-en="SDK Application:">
+          
+        </span>
+        <span>
+          <a href="/dl/apply-sdk.xlsx" target="applySDK" class="i18n"  data-en="download the table file" data-cn="下载填写表格">
+             下载填写表格
+          </a>         
+        </span>
+        <span class="i18n" data-en="and fill it mail to " data-cn=",填写完成后发送到邮箱">
+          ,填写完成后发送到邮箱
+        </span>
+        <span>
+          <a href="mailto:dev-support@hyperorchid.org?subject=applySDK" class="i18n" id="supportMail">dev-support@hyperorchid.org</a>
+        </span>
+   
+        <button id="copyEmailBtn" class="btn btn-white-green px-3 mr-1 i18n" 
+          data-cn="复制" data-en="Copy"
+        >
+          复制
+        </button> 
+        <span id="copyedTips" class="small tips-bubble tips-bubble-left d-none">Copyed!</span>            
+
+      </div>
+    </div>
+  </section>
+
+
 
   <section class="footer-bg contact-section" id="contact-section">
     <div class="container">
@@ -488,6 +529,7 @@
 <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script type="text/javascript" src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="vendor/clipboard/clipboard.min.js"></script>
 <script type="text/javascript" src="js/index-bundle.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
