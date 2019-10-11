@@ -1,0 +1,27 @@
+﻿Application
+  .Team
+    1.Background
+    2.How many number
+    3.Country(Region)
+    4.Programming language
+    5.Experience of blockchain tech
+    6.Understanding about the advantage of blockchain decentralization in security and cutting cost  
+  .Product
+    1.Has your team developed any DAPP? (Pates download link)
+    2.Number of users or estimation about it
+    3.Target population(country or region，language，internet accessibility，consumption level of internet service)
+    4.Pages of product(homepage，facebook, twitter, github, telegram, etc)
+    5.Media report
+    6.Does your project need to build own mining pool
+    7.Does your project need to create new ERC20 token
+  .Type of SDK:(Y) for selected
+    Ios()
+    Android()
+    Mac()
+    Windows()
+    Linux()
+    Other
+  .Contects
+    Email:(required)
+    Phone：
+    Other（WhatsApp，Facebook, twitter, wechat, etc）
