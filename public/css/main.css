@@ -75,13 +75,13 @@ svg {
   background-color: transparent;
 }
 .sel-lg {
-  font-size:.25rem;
-  letter-spacing: .05rem;
+  font-size:.75rem;
+  letter-spacing: .15rem;
 }
 
 .lang-active {
   color: #182B71;
-  font-size: .3rem;
+  font-size: .75rem;
   font-weight: 400;
 }
 
