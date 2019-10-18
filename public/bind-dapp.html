@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hyperorchid">
+  <meta name="author" content="Hyperorchid">  
+  <title>Hyperorchid</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> 
+
+  <!-- custom -->
+  <link rel="stylesheet" href="css/main.css"> 
+  <link rel="stylesheet" href="css/bind-dapp.css"> 
+</head>
+<body id="page-top">
+ 
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container">
+      <!-- Brand Logo -->
+      <a class="navbar-brand" href="#">
+        <img class="img-logo img-fluid" src="img/nav-logo-blue.png"></img>
+        <!-- <svg class="top-logo">
+          <use xlink:href="#nav-logo-blue"></use>
+        </svg> -->
+       <!--  <span class="logo-title">Hyperorchid</span> -->
+      </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button"
+        data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation"
+      >
+        Menu<i class="fas fa-bars"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a href="index.html" data-en="Home" data-cn="主页"
+            class="nav-link js-scroll-trigger i18n">
+              Home
+            </a>
+          </li>
+         
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger sel-lang">
+              <span class="sel-lg i18n lang-active" data-lg="en" data-en="English" data-cn="英文">English</span>
+              <span class="vertical">|</span>
+              <span class="sel-lg i18n" data-lg="cn" data-en="Chinese" data-cn="中文">中文</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> 
+
+  <section class="section" style="padding-top:60px; ">
+    <div class="container">
+      <div class="row justify-content-center align-items-cent">
+        <img class="img-fluid" src="img/metamask-logo-eyes.png" width="150px" height="150px"></img>
+      </div>
+      <div class="row justify-content-center align-items-center">
+        <h3 class="section-title i18n">
+          Binding Ethereum Address To Pirate
+        </h3>
+      </div>
+      <div class="row justify-content-center align-items-center" id="noMetaMaskWarn">
+        <div class="col-12 text-center text-danger metamask-warn-container d-none">
+          <p class="">Your Browser not found MetaMask Plugin,please Install </p>
+        </div> 
+        <div class="metamask-guide d-none">
+          <a href="#" target="_blank" id="goMetaMaskLink">
+            Get MetaMask Plugin
+          </a>          
+        </div>       
+
+      </div>
+    </div>
+  </section>  
+
+  <section class="section binding-section rela-metamask">
+    <div class="container">
+      <h4 class="section-title i18n" data-cn="绑定" data-en="Binding">Binding</h4>
+
+      <form>
+        <div class="form-group row">
+          <label for="selectedAddress" class="col-sm-2 col-2 col-form-label i18n"
+            data-cn="MetaMask钱包地址" data-en="Selected Address"
+          >
+            Selected Address
+          </label>
+          <div class="col-sm-6 col-6">
+            <input type="text" name="selectedAddress" readonly="readonly" class="form-control-plaintext" value="">
+          </div>
+          <div class="col-sm-4 col-3">
+            <p class="small text-warning">
+              If you want changed selected Address ,Please use the MetaMask Plugin.
+            </p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="hopAddress" class="col-sm-2 col-form-label i18n"
+            data-cn="HOP 地址" data-en="HOP Address"
+          >
+            HOP Address
+          </label>
+          <div class="col-sm-10">
+            <input type="text" name="hopAddress" class="form-control" placeholder="HOP Address">
+          </div>
+        </div>
+        <div class="query-info">
+          <div class="form-group row">
+            <div class="col-4 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text i18n" data-cn="ETH 余额" data-en="ETH Balance">
+                  ETH Balance
+                </span>
+              </div>
+              <input type="text" readonly="readonly" class="form-control" name="ethBalance" value="0.00">
+            </div>
+            <div class="col-4 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text i18n" data-cn="HOP 余额" data-en="HOP Balance">HOP Balance</span>
+              </div>
+              <input type="text" readonly="readonly" class="form-control" name="hopBalance" value="0.00">
+            </div>
+            <div class="col-4 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text i18n" data-cn="绑定数量" data-en="Binging Count">Binging Count</span>
+              </div>
+              <input type="text" readonly="readonly" class="form-control" name="bindCount" value="0">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row justify-content-center align-items-center">
+          <button class="btn btn-primary mx-3 px-sm-3 mm-btn" disabled id="queryBtn">Query</button>
+          <button class="btn btn-primary mx-3 px-sm-3 mm-btn" disabled id="bindBtn">Binding</button>
+          <button class="btn btn-primary mx-3 px-sm-3 mm-btn" disabled id="unbindBtn">Unbind</button>
+        </div>
+      </form>    
+    </div>   
+ 
+  </section>
+
+  <section class="section rela-metamask">
+    <div class="container">
+      <h4 class="section-title i18n" data-cn="交易" data-en="Transactions">Transactions</h4>
+    </div>
+    <div class="container table-container" id="transactionsTableContainer">
+      
+    </div>
+  </section>
+
+  <!-- Help Docs -->
+  <section id="help-section" class="section">
+    <div class="container">
+      <div class="col-12 text-center">
+        <h3 class="section-title i18n" data-en="Help Guide" data-cn="帮助向导">Help Guide</h3>
+      </div>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-4">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Where Pirate App Can Download</strong>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                Google Play Download
+
+              </a> 
+              <img src="img/icons/google-play-black.png"  class="img-fluid icon-suffix">
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                Fir.im Download
+              </a>              
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                Github Download
+              </a>
+              <img src="img/icons/github-dark.png"  class="img-fluid icon-suffix">
+            </li>
+          </ul>
+        </div>         
+        <div class="col-4">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Pirate App Help</strong>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                how created an Pirate Address
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                How to Import or Export Pirate Address.
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                How to binding ETH wallet on Pirate. 
+              </a>
+            </li>
+          </ul>
+        </div>       
+        <div class="col-4">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>MtetaMask Plugin Help</strong>
+            </li>
+            <li class="list-group-item">
+              <a href="https://www.youtube.com/watch?v=ZIGUC9JAAw8" 
+              target="_blank" class="a-link text-secondary">
+                How to use MetaMask?
+              </a>  
+              <img src="img/icons/youtube.png"  class="img-fluid icon-suffix">
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                How to install MetaMask on your browser?
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="a-link text-secondary">
+                Import imToken wallet into MetaMask.
+              </a>              
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+<script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="vendor/clipboard/clipboard.min.js"></script>
+<script type="text/javascript" src="js/index-bundle.js"></script>
+<script type="text/javascript" src="js/bind-dapp.js"></script>
+</body>
+</html>
