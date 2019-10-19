@@ -64,12 +64,15 @@ var DApp = {
     if(!DApp.pirate)
       return Promise.reject(new Error('Contract load error'));
     let acc = ethereum.selectedAddress || $('[name="selectedAddress"]').val();
-
+    console.log('Address>>>',acc)
     DApp.pirate.bindingInfo.call(acc,(err,data)=>{
       if(data){
-        console.log('>>>>>',data.toString());
-        $('[name="ethBalance"]').val(DApp.fromWei2Ether(data[0]));
-        $('[name="hopBalance"]').val(DApp.fromWei2Ether(data[1]));
+        console.log('>>>>>',data[0]+"");
+        let ethBal =DApp.fromWei2Ether(data[0]);
+        let hopBal =DApp.fromWei2Ether(data[1]);
+        console.log('>>>>>',ethBal);
+        $('[name="ethBalance"]').val(ethBal);
+        $('[name="hopBalance"]').val(hopBal);
         $('[name="bindCount"]').val(data[2]);
       }
     });
@@ -104,6 +107,11 @@ function bindQueryBtn(){
   });
 }
 
+function balanceFormat(val,precision,symbol) {
+  if(!val || val == 0 || val=="0") return "0.00"+(symbol||'');
+
+  return AccFormatter.formatMoney(val,symbol||'',6);
+}
 
 /* ============================== Load Begin ==================================== */
 ((window,$) =>{
