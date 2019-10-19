@@ -71,8 +71,8 @@ var DApp = {
         let ethBal =DApp.fromWei2Ether(data[0]);
         let hopBal =DApp.fromWei2Ether(data[1]);
         console.log('>>>>>',ethBal);
-        $('[name="ethBalance"]').val(ethBal);
-        $('[name="hopBalance"]').val(hopBal);
+        $('[name="ethBalance"]').val(AccFormatter.formatMoney(ethBal,'',_hopsettings.precision.coin));
+        $('[name="hopBalance"]').val(AccFormatter.formatMoney(hopBal,'',_hopsettings.precision.coin));
         $('[name="bindCount"]').val(data[2]);
       }
     });
