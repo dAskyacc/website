@@ -7,9 +7,10 @@ global._hopsettings = require('./lib/utils/settings.js');
 const BrowserUtil = require('./lib/utils/browserutil.js');
 let ua = window.navigator.userAgent;
 global._bw = new BrowserUtil(ua);
+global.DAppUtils = require('./lib/dapp-utils.js');
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/contract/abimanager.js":2,"./lib/i18n-common.js":3,"./lib/utils/browserutil.js":4,"./lib/utils/settings.js":5}],2:[function(require,module,exports){
+},{"./lib/contract/abimanager.js":2,"./lib/dapp-utils.js":3,"./lib/i18n-common.js":4,"./lib/utils/browserutil.js":5,"./lib/utils/settings.js":6}],2:[function(require,module,exports){
 const CONTRACT_CTX = {
   "master":{
     main_address:"0x55c75f509fC620cA1c33E313dBBD5f73aB86ba5B",
@@ -26,6 +27,29 @@ module.exports = {
   }
 };
 },{}],3:[function(require,module,exports){
+function GetNetwork(versionId){
+  if(typeof versionId ==='undefined')return '';
+  switch(versionId){
+    case "1":
+      return "mainnet";
+    case "3":
+      return "ropsten";
+    case "4":
+      return "rinkeby";
+    case "42":
+      return "kovan";
+    case "5":
+      return "goerli";
+    default:
+      return versionId;
+  }
+}
+
+
+module.exports = {
+  getNetwork:GetNetwork
+}
+},{}],4:[function(require,module,exports){
 
 'use strict';
 
@@ -97,7 +121,7 @@ class I18n {
 
 
 module.exports = I18n;
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 class BrowserUtil {
   constructor(uAgent){
     this.ua = uAgent;
@@ -229,7 +253,7 @@ function buildRules(ruleTuples){
 }
 
 module.exports = BrowserUtil;
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = {
   metamask:{
     chrome:"https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",

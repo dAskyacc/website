@@ -269,6 +269,11 @@ svg {
   background-color: #467370 !important;
 }
 
+.btn-primary.disabled,.btn-primary:disabled {
+  background-color: rgba(148,145,167,.65);
+  border-color: #47484a;
+}
+
 .btn-white-green {
   background-color: rgba(255,255,255,.75);
   border: 1px solid rgba(255,255,255,.55);;

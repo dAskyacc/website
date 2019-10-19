@@ -2,3 +2,9 @@ li>img.icon-suffix {
   width:24px;
   height: 23px;
 }
+
+.current-network {
+  margin-left: 2rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}

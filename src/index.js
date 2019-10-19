@@ -5,3 +5,4 @@ global._hopsettings = require('./lib/utils/settings.js');
 const BrowserUtil = require('./lib/utils/browserutil.js');
 let ua = window.navigator.userAgent;
 global._bw = new BrowserUtil(ua);
+global.DAppUtils = require('./lib/dapp-utils.js');
