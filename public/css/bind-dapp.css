@@ -8,3 +8,7 @@ li>img.icon-suffix {
   font-weight: 500;
   font-size: 1.5rem;
 }
+
+.tx-item {
+  color:"#27262C" !important;
+}

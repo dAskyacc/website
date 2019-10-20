@@ -90,7 +90,7 @@
       <form>
         <div class="form-group row">
           <label for="selectedAddress" class="col-sm-2 col-2 col-form-label i18n"
-            data-cn="MetaMask钱包地址" data-en="Selected Address"
+            data-cn="钱包地址" data-en="Selected Address"
           >
             Selected Address
           </label>
@@ -113,8 +113,11 @@
           >
             Pirate Address
           </label>
-          <div class="col-sm-10">
+          <div class="col-sm-6">
             <input type="text" name="hopAddress" id="hopAddress" class="form-control" placeholder="Pirate Address">
+          </div>
+          <div class="col-sm-4 col-4">
+            <p class="text-danger d-none" id="hopInputTips"></p>
           </div>
         </div>
         <div class="query-info">
@@ -140,23 +143,30 @@
               <input type="text" readonly="readonly" class="form-control" name="bindCount" value="0">
             </div>
           </div>
+          <div class="operated-tips row justify-content-center text-center">
+            <div class="col-10">
+              <p class="text-warning" id="operatedTipsContent"></p>
+            </div>
+          </div>
         </div>
         <div class="form-group row justify-content-center align-items-center">
           <button class="btn btn-primary mx-3 px-sm-3 mm-btn" disabled id="queryBtn">Query</button>
           <button class="btn btn-primary mx-3 px-sm-3 mm-btn" disabled id="bindBtn">Binding</button>
           <button class="btn btn-primary mx-3 px-sm-3 mm-btn" disabled id="unbindBtn">Unbind</button>
+          <button class="btn btn-primary mx-3 px-sm-3 mm-btn d-none"  id="testBtn">Test</button>
         </div>
       </form>    
     </div>   
  
   </section>
 
-  <section class="section rela-metamask d-none">
+  <section class="section rela-metamask ">
     <div class="container">
       <h4 class="section-title i18n" data-cn="交易" data-en="Transactions">Transactions</h4>
     </div>
-    <div class="container table-container" id="transactionsTableContainer">
-      
+    <div class="container " id="transactionsTableContainer">
+      <div class="list-group table-container" id="tableContainer">        
+      </div>
     </div>
   </section>
 
@@ -180,7 +190,7 @@
               <img src="img/icons/google-play-black.png"  class="img-fluid icon-suffix">
             </li>
             <li class="list-group-item">
-              <a href="#" class="a-link text-secondary">
+              <a href="https://fir.im/c1nd" class="a-link text-secondary" target="fir.im">
                 Fir.im Download
               </a>              
             </li>

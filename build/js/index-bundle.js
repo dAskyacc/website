@@ -426,8 +426,10 @@ global.DAppUtils = require('./lib/dapp-utils.js');
 
 global.AccFormatter = require('accounting');
 
+global.TxListGroup = require('./lib/ui/tx-listgroup.js');
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/contract/abimanager.js":3,"./lib/dapp-utils.js":4,"./lib/i18n-common.js":5,"./lib/utils/browserutil.js":6,"./lib/utils/settings.js":7,"accounting":1}],3:[function(require,module,exports){
+},{"./lib/contract/abimanager.js":3,"./lib/dapp-utils.js":4,"./lib/i18n-common.js":5,"./lib/ui/tx-listgroup.js":6,"./lib/utils/browserutil.js":7,"./lib/utils/settings.js":8,"accounting":1}],3:[function(require,module,exports){
 const CONTRACT_CTX = {
   "master":{
     main_address:"0x55c75f509fC620cA1c33E313dBBD5f73aB86ba5B",
@@ -462,9 +464,13 @@ function GetNetwork(versionId){
   }
 }
 
+function ValidRootAddress(addr) {
+  return addr == "0x0000000000000000000000000000000000000000";
+}
 
 module.exports = {
-  getNetwork:GetNetwork
+  getNetwork:GetNetwork,
+  validBinded:ValidRootAddress
 }
 },{}],5:[function(require,module,exports){
 
@@ -539,6 +545,139 @@ class I18n {
 
 module.exports = I18n;
 },{}],6:[function(require,module,exports){
+const D = {
+  containerID:"table-container",
+  defaultState:"pending",
+  defaultLang:"en",
+  etherscan:{
+    en:"https://etherscan.io/",
+    cn:"https://cn.etherscan.com/"
+  }
+}
+/**
+ * Tx: hash,created (number),from (address),state(pending,confirm)
+ */
+class TxListgroup {
+  constructor(){
+    this.lg = D.defaultLang;
+    this.TxStore = [];
+  }
+
+  clearTxStore(){
+    this.TxStore = [];
+  }
+
+  addTx(obj){
+    let r = this.validTx(obj);
+    if(r){
+      this.TxStore.push(r);
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  appendTx($container,obj){
+    let r = this.validTx(obj);
+    if($container instanceof jQuery && r){
+      this.TxStore.push(r);
+      let html = this.buildItemHtml(r);
+
+      $container.append(html);
+    }
+  }
+
+  validTx(obj){
+    if(!obj.hash || !obj.from)return false;
+
+    if(!obj.state)obj.state=D.defaultState;
+    if(!obj.created)obj.created = new Date().getTime();
+    return obj;
+  }
+
+  setLang(lg){
+    if(!lg || (lg!="cn" && lg !="en"))lg=D.defaultLang;
+    this.lang = lg;
+  }
+
+  getEtherscan(lg) {
+    if(!lg || (lg!="cn" && lg !="en"))lg=D.defaultLang;
+    return D.etherscan[lg];
+  }
+
+  buildItemHtml(txItem) {
+    let txHash = txItem.hash;
+    let aHref = this.getEtherscan(this.lang) + "tx/" + txHash;
+    let html = '';
+    html += '<a class="list-group-item tx-item text-muted" ' 
+      + ' data-tx="'+txHash+'"' +' data-created="'+txItem.created +'" '
+      + ' href="'+aHref+'" target="etherscan" alt="View On Etherscan" >';
+
+
+    let timeStr = formatTime(txItem.created,'{y}-{m}-{d} {h}:{i}:{s}');
+    html += '<div class="d-flex w-100 justify-content-between" >'
+      + '<h6 class="tx-h-item">Transaction Info</h6>'
+      + '<small class="tx-created">'+timeStr+'</small></div>';
+
+    // p tx hash
+    html += '<p class="mb-1">Transation Hash: '+txHash+'</p>';
+
+    //bottom state
+    html += '<div class="d-flex w-100 justify-content-between">'
+        +'      <div></div>'
+        +'      <span class="tx-state">' + txItem.state + '</span>'
+        +'</div>';
+
+    html += '</a>'
+    return html;
+  }
+}
+
+function formatTime(time,cFormat){
+  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+  let date
+
+  if (typeof time === 'object') {
+    date = time
+  } else {
+    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
+      time = parseInt(time)
+    }
+    if ((typeof time === 'number') && (time.toString().length === 10)) {
+      time = time * 1000
+    }
+    date = new Date(time)
+  }
+
+  const formatObj = {
+    y: date.getFullYear(),
+    m: date.getMonth() + 1,
+    d: date.getDate(),
+    h: date.getHours(),
+    i: date.getMinutes(),
+    s: date.getSeconds(),
+    a: date.getDay()
+  }
+
+  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+    let val = formatObj[key]
+
+    if (key === 'a') {
+      return ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'][val]
+    }
+
+    if (result.length > 0 && val < 10) {
+      val = '0' + val
+    }
+
+    return val || 0
+  })
+
+  return time_str
+}
+
+module.exports = TxListgroup;
+},{}],7:[function(require,module,exports){
 class BrowserUtil {
   constructor(uAgent){
     this.ua = uAgent;
@@ -670,7 +809,7 @@ function buildRules(ruleTuples){
 }
 
 module.exports = BrowserUtil;
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = {
   metamask:{
     chrome:"https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
@@ -680,6 +819,7 @@ module.exports = {
   precision:{
     "coin":4,
     "money":2
-  }
+  },
+  rootAddress:"0x0000000000000000000000000000000000000000"
 }
 },{}]},{},[2]);

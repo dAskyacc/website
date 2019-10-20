@@ -16,7 +16,11 @@ function GetNetwork(versionId){
   }
 }
 
+function ValidRootAddress(addr) {
+  return addr == "0x0000000000000000000000000000000000000000";
+}
 
 module.exports = {
-  getNetwork:GetNetwork
+  getNetwork:GetNetwork,
+  validBinded:ValidRootAddress
 }

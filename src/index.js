@@ -8,3 +8,5 @@ global._bw = new BrowserUtil(ua);
 global.DAppUtils = require('./lib/dapp-utils.js');
 
 global.AccFormatter = require('accounting');
+
+global.TxListGroup = require('./lib/ui/tx-listgroup.js');

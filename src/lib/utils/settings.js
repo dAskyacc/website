@@ -7,5 +7,6 @@ module.exports = {
   precision:{
     "coin":4,
     "money":2
-  }
+  },
+  rootAddress:"0x0000000000000000000000000000000000000000"
 }

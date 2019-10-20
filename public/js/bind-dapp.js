@@ -1,3 +1,13 @@
+const DemoItem = {
+  hash:"0x8e276b5b23446d64348a6aed559493adac3f90df289b237fcdc68544559b1bc8",
+  from:"0x052516025f45a9ad8d47eefdcc371346c467a9b1",
+  state:"pending"
+};
+
+const C = {
+  loadTXContainer:true
+};
+
 var DApp = {
   enabled:()=>{
     if(window.ethereum && window.ethereum.networkVersion =="1"){
@@ -5,7 +15,9 @@ var DApp = {
     }
     return false;
   },
-
+  getTransactionObject:()=>{
+    return {from:ethereum.selectedAddress}
+  },
   load:async() => {
     if(!_bw.supportMetaMask())
       return "Current browser not support Dapp,Please use Chrome，Firefox or Opera.";
@@ -16,10 +28,10 @@ var DApp = {
     await DApp.initWeb3();
     //console.log(_bw.Info);
     await DApp.loadContract();
+    DApp.loadTxContainer();
     return "success";
   },
   initWeb3: async() =>{
-
     if(window.ethereum){
       window.ethereum.enable()
         .catch(reson =>{
@@ -53,18 +65,29 @@ var DApp = {
       // web3 = new Web3(web3.currentProvider);
     }else{
       return Promise.reject(new Error('Non-Ethereum browser detected. You should consider trying MetaMask!'));
-    }
-    
+    }    
   },
   loadContract:async()=>{
     let p = AbiManager.getMaster();
-    DApp.pirate = web3.eth.contract(p.abi).at(p.main_address) ;
+    DApp.pirate = await web3.eth.contract(p.abi).at(p.main_address) ;
   },
-  query:()=>{
+  loadTxContainer:async ()=>{
+    if(C.loadTXContainer){
+      DApp.TxListInstance = new TxListGroup();
+    }
+  },
+  query:(el)=>{
     if(!DApp.pirate)
       return Promise.reject(new Error('Contract load error'));
     let acc = ethereum.selectedAddress || $('[name="selectedAddress"]').val();
-    console.log('Address>>>',acc)
+    console.log('Address>>>',acc);
+    //set doing
+    $(el).attr('disabled',"disabled");
+    setOperatedTips('query...');
+
+    // var data = DApp.pirate.bindingInfo.getData(acc);
+    // console.log(data);
+
     DApp.pirate.bindingInfo.call(acc,(err,data)=>{
       if(data){
         console.log('>>>>>',data[0]+"");
@@ -75,8 +98,78 @@ var DApp = {
         $('[name="hopBalance"]').val(AccFormatter.formatMoney(hopBal,'',_hopsettings.precision.coin));
         $('[name="bindCount"]').val(data[2]);
       }
+      //set done
+      $(el).removeAttr('disabled');
+      setOperatedTips('');
     });
+  },
+  validPreOperated:()=>{
+    return DApp.enabled() && DApp.pirate && ethereum.selectedAddress;
+  },
+  binding:async (el)=>{
+    if(!DApp.validPreOperated()){
+      return Promise.reject(new Error('no wallet account or metamask load fail.'));
+    }
+    let hopAddr = $('#hopAddress').val();
+    if(!hopAddr){
+      return Promise.reject(new Error('ValidError'));
+    }
+    if($('[name="selectedAddress"]').val() != ethereum.selectedAddress) {
+      $('[name="selectedAddress"]').val(ethereum.selectedAddress);
+    }
 
+    return "success";
+  },
+  unbinding:async (v)=>{
+    if(!DApp.validPreOperated()){
+      return Promise.reject(new Error('no wallet account or metamask load fail.'));
+    }
+
+    if($('[name="selectedAddress"]').val() != ethereum.selectedAddress) {
+      $('[name="selectedAddress"]').val(ethereum.selectedAddress);
+    }
+
+    $(ELTag.OperatedTipsID).text('unbinding...')
+    setOperatedTips('unbinding...');
+    return await DApp.pirate.unbind.sendTransaction(
+      v,DApp.getTransactionObject(),(err,data) =>{
+        if(err){
+          console.log(err);
+          let ms = err.stack ? err.stack +"" :'unbind failed.';
+          return false;
+        }
+        if(data){
+          console.log('>>>',data+"");
+          
+        }
+        setOperatedTips('');
+      });
+  },
+  check:async (el)=>{
+    if(!DApp.pirate)
+      return Promise.reject(new Error('Contract load error'));
+    let hopAddr = $('#hopAddress').val();
+    if(!hopAddr){
+      return Promise.reject(new Error('please input address....'))
+    }
+    let rs = DApp.pirate.check.call(hopAddr,(err,data)=> {
+      if(err){
+        return Promise.reject(err);
+      }
+      if(data){
+        console.log(data[0]+"");
+        console.log(data[1]+"");
+        console.log(data[2]+"");
+      }
+    });
+    return Promise.resolve(rs);
+  },
+  addTx:(txObjt) => {
+    if(DApp.TxListInstance){
+
+      let $container = $("#tableContainer");
+      DApp.TxListInstance.appendTx($container,txObjt);
+    }
   },
   fromWei2Ether:(bn) => {
     return web3.fromWei(bn,'ether');
@@ -84,8 +177,11 @@ var DApp = {
 }; 
 /* =========================== GLOBAL METHODS ============================ */
 let ELTag = {
-  MetaMaskTips:".metamask-warn-container",
-  MetaMaskInstallHref:".metamask-guide"
+  "MetaMaskTips":".metamask-warn-container",
+  "MetaMaskInstallHref":".metamask-guide",
+  "OperatedTipsID":"#operatedTipsContent",
+  "PirateInputAddrID":"#hopAddress",
+  "PirateInputTipsID":"#hopInputTips"
 };
 
 function fillSelectedAddress(address){
@@ -102,9 +198,56 @@ function UnsupportNetworkWarn(b){
 
 function bindQueryBtn(){
   $('#queryBtn').on('click',function(e){
-    DApp.query();
+    DApp.query(this);
     return false;
   });
+}
+
+function bindBindingBtn(){
+  $('#bindBtn').on('click',function(e){
+    $(this).attr('disabled','disabled');
+    var $el = $(this);
+    DApp.binding(this).catch(err=>{
+      console.log(err.message);
+      if(err.message == 'ValidError'){
+        $("#hopInputTips").text('please input correct address.').removeClass('d-none');
+        setTimeout(()=>{$("#hopInputTips").addClass('d-none')},5000)        
+      }
+      return false;
+    }).then(data =>{
+      
+      if(data)$el.removeAttr('disabled');
+    });
+    return false;
+  });  
+}
+
+/**
+ * Unbind click
+ * @DateTime 2019-10-20
+ * @return   {[type]}   [unbind click]
+ */
+function unbindBindingBtn(){
+  $('#unbindBtn').on('click',function(e){
+    let $el = this;
+    let v = $(ELTag.PirateInputAddrID).val();
+    let $inputTips = $(ELTag.PirateInputTipsID);
+    if(v==''||v.trim()==""){
+      $(this).attr('disabled','disabled');
+      $inputTips.text('please input correct address.').removeClass('d-none');
+      setTimeout(()=>{$inputTips.addClass('d-none')},5000);
+      return false;
+    }
+    let data = DApp.unbinding(v).catch(err=>{
+      if(err){
+        console.log('outUnbind:',err);
+      }
+    }).then(()=>{
+
+    });
+
+    return false;
+  });  
 }
 
 function balanceFormat(val,precision,symbol) {
@@ -113,22 +256,45 @@ function balanceFormat(val,precision,symbol) {
   return AccFormatter.formatMoney(val,symbol||'',6);
 }
 
+function setOperatedTips(tips){
+  let v= tips ||'';
+  $(ELTag.OperatedTipsID).text(v);
+}
+
+function hopAddressChanged() {
+  $("#hopAddress").on('input propertychange',(e) => {
+    let v = $("#hopAddress").val();
+    
+    if(typeof v ==='undefined'|| v =='' || v.trim() == ''){
+      $('#bindBtn').attr('disabled',"disabled");
+      $('#unbindBtn').attr('disabled',"disabled");
+    }else{
+      $('#bindBtn').removeAttr('disabled');
+      $('#unbindBtn').removeAttr('disabled');
+    }
+  });
+}
+
+function testBtEventBind() {
+  $("#testBtn").on('click',(e) =>{
+    DApp.addTx(DemoItem);
+  });
+}
 /* ============================== Load Begin ==================================== */
 ((window,$) =>{
  
   $(window).on('load',()=>{
     DApp.load().then((res)=>{
-      console.log(res);
+      console.log("DApp loaded",res);
       if(res != 'success'){
         browserNotSupportDapp(res);
-
       }
       toggleMMButton(DApp.enabled());
       initBindElEvents();
     }).catch(error =>{
       console.log('error',error);
       NoMetaMaskError(error);
-      toggleMMButton(DApp.enabled());
+      toggleMMButton(false);
     });
   });
 
@@ -136,6 +302,10 @@ function balanceFormat(val,precision,symbol) {
     var i18n = new I18n('en');
     i18n.indexInit();
     bindQueryBtn();
+    bindBindingBtn();
+    unbindBindingBtn();
+    hopAddressChanged();
+    testBtEventBind();
   }
 
 
