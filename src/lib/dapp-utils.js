@@ -20,7 +20,12 @@ function ValidRootAddress(addr) {
   return addr == "0x0000000000000000000000000000000000000000";
 }
 
+function ValidPirateAddres(id){
+  return /^[a-zA-Z0-9]{45}$/.test(id.trim());
+}
+
 module.exports = {
   getNetwork:GetNetwork,
-  validBinded:ValidRootAddress
+  validBinded:ValidRootAddress,
+  validHop:ValidRootAddress
 }

@@ -106,20 +106,43 @@ var DApp = {
   validPreOperated:()=>{
     return DApp.enabled() && DApp.pirate && ethereum.selectedAddress;
   },
-  binding:async (el)=>{
+  binding:async (v)=>{
     if(!DApp.validPreOperated()){
       return Promise.reject(new Error('no wallet account or metamask load fail.'));
     }
-    let hopAddr = $('#hopAddress').val();
-    if(!hopAddr){
-      return Promise.reject(new Error('ValidError'));
-    }
+
     if($('[name="selectedAddress"]').val() != ethereum.selectedAddress) {
       $('[name="selectedAddress"]').val(ethereum.selectedAddress);
     }
+    let txItem = {
+      from:ethereum.selectedAddress,
+      state:"pending",
+      created:new Date().getTime()
+    };
 
-    return "success";
+    $(ELTag.OperatedTipsID).text('unbinding...')
+    setOperatedTips('unbinding...');
+
+    return await DApp.pirate.unbind.sendTransaction(
+      v,DApp.getTransactionObject(),(err,tx)=>{
+        if(err){
+          console.log(err);
+          return false;
+        }
+        if(tx){
+          txItem.hash = tx;
+          DApp.addTx(txItem);
+        }
+        setOperatedTips('');
+      });
+
   },
+  /**
+   * unbind 
+   * @DateTime 2019-10-20
+   * @param    {[type]}   v [description]
+   * @return   {[type]}     [description]
+   */
   unbinding:async (v)=>{
     if(!DApp.validPreOperated()){
       return Promise.reject(new Error('no wallet account or metamask load fail.'));
@@ -129,18 +152,25 @@ var DApp = {
       $('[name="selectedAddress"]').val(ethereum.selectedAddress);
     }
 
+    let txItem = {
+      from:ethereum.selectedAddress,
+      state:"pending",
+      created:new Date().getTime()
+    };
+
     $(ELTag.OperatedTipsID).text('unbinding...')
     setOperatedTips('unbinding...');
     return await DApp.pirate.unbind.sendTransaction(
-      v,DApp.getTransactionObject(),(err,data) =>{
+      v,DApp.getTransactionObject(),(err,tx) =>{
         if(err){
           console.log(err);
           let ms = err.stack ? err.stack +"" :'unbind failed.';
           return false;
         }
-        if(data){
-          console.log('>>>',data+"");
-          
+        if(tx){
+          console.log('>>>',tx+"");
+          txItem.hash = tx;
+          DApp.addTx(txItem);
         }
         setOperatedTips('');
       });
@@ -184,6 +214,14 @@ let ELTag = {
   "PirateInputTipsID":"#hopInputTips"
 };
 
+function validHOP(id){
+  if(typeof id ==undefined)return false;
+  //id = id.trim();
+  let reg = /^[a-zA-Z0-9]{45}$/;
+  //console.log('l:',id.trim().length);
+  return reg.test(id.trim());
+}
+
 function fillSelectedAddress(address){
   $('[name="selectedAddress"]').val(address||'');
 }
@@ -205,9 +243,16 @@ function bindQueryBtn(){
 
 function bindBindingBtn(){
   $('#bindBtn').on('click',function(e){
-    $(this).attr('disabled','disabled');
-    var $el = $(this);
-    DApp.binding(this).catch(err=>{
+    let v = $(ELTag.PirateInputAddrID).val();
+    let $inputTips = $(ELTag.PirateInputTipsID);
+    if(v==''|| !validHOP(v)){
+      $(this).attr('disabled','disabled');
+      $inputTips.text('please input correct address.').removeClass('d-none');
+      setTimeout(()=>{$inputTips.addClass('d-none')},5000);
+      return false;
+    }
+
+    DApp.binding(v).catch(err=>{
       console.log(err.message);
       if(err.message == 'ValidError'){
         $("#hopInputTips").text('please input correct address.').removeClass('d-none');
@@ -215,8 +260,7 @@ function bindBindingBtn(){
       }
       return false;
     }).then(data =>{
-      
-      if(data)$el.removeAttr('disabled');
+
     });
     return false;
   });  
@@ -232,7 +276,7 @@ function unbindBindingBtn(){
     let $el = this;
     let v = $(ELTag.PirateInputAddrID).val();
     let $inputTips = $(ELTag.PirateInputTipsID);
-    if(v==''||v.trim()==""){
+    if(v==''|| !validHOP(v)){
       $(this).attr('disabled','disabled');
       $inputTips.text('please input correct address.').removeClass('d-none');
       setTimeout(()=>{$inputTips.addClass('d-none')},5000);
@@ -265,7 +309,7 @@ function hopAddressChanged() {
   $("#hopAddress").on('input propertychange',(e) => {
     let v = $("#hopAddress").val();
     
-    if(typeof v ==='undefined'|| v =='' || v.trim() == ''){
+    if(typeof v ==='undefined'|| !validHOP(v)){
       $('#bindBtn').attr('disabled',"disabled");
       $('#unbindBtn').attr('disabled',"disabled");
     }else{
@@ -305,7 +349,7 @@ function testBtEventBind() {
     bindBindingBtn();
     unbindBindingBtn();
     hopAddressChanged();
-    testBtEventBind();
+    //testBtEventBind();
   }
 
 
