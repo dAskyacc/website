@@ -123,7 +123,7 @@ var DApp = {
     $(ELTag.OperatedTipsID).text('unbinding...')
     setOperatedTips('unbinding...');
 
-    return await DApp.pirate.unbind.sendTransaction(
+    return await DApp.pirate.bind.sendTransaction(
       v,DApp.getTransactionObject(),(err,tx)=>{
         if(err){
           console.log(err);
@@ -217,7 +217,7 @@ let ELTag = {
 function validHOP(id){
   if(typeof id ==undefined)return false;
   //id = id.trim();
-  let reg = /^[a-zA-Z0-9]{45}$/;
+  let reg = /^[a-zA-Z0-9]{40,45}$/;
   //console.log('l:',id.trim().length);
   return reg.test(id.trim());
 }
