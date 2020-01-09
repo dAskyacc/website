@@ -126,7 +126,7 @@ function execMkdir() {
 function uploadBash(){
   let bash = getSCPPreFix()
 
-  bash = bash + `` + ` ${user}@${IEnv.REMOTE_HOST}:${IEnv.REMOTE_DEST_HOME}/${IEnv.BAK_FOLDER}/`
+  bash = bash + ` ${PUSH_FILE}` + ` ${user}@${IEnv.REMOTE_HOST}:${IEnv.REMOTE_DEST_HOME}/${IEnv.BAK_FOLDER}/`
 
   return bash;
 }
