@@ -34,14 +34,15 @@
   "license": "MIT",
   "dependencies": {
     "accounting": "^0.4.1",
-    "fast-date-format": "^2.2.3",
+    "fast-date-format": "^2.2.4",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
     "bestzip": "^2.1.4",
     "browserify": "^16.5.0",
     "browserify-shim": "^3.8.14",
-    "dotenv": "^8.1.0",
+    "cross-env": "^6.0.3",
+    "dotenv": "^8.2.0",
     "lite-server": "^2.5.4",
     "shelljs": "^0.8.3"
   }
