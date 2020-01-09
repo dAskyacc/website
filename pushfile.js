@@ -1,3 +1,7 @@
+/**
+ * use
+ * cross-env PUSH_FILE=public/index.html node pushfile.js
+ */
 const pkgJson = require('./package.json')
 const fs = require('fs');
 const path = require('path');
