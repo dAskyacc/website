@@ -17,7 +17,13 @@
 ---- index.js             //js module 管理入口
 
 
+### 开发运行
 
+```bash
+npm start                 # 启动本地开发服务,默认打开浏览器
+
+node bin/publisher.js     # 将项目达成zip包
+```
 
 
 
@@ -26,7 +32,7 @@
 
 ## 服务器
 
-IP:45.76.23.250 \\
+IP:45.76.23.250 
 secret:
 
 ## Nginx 1.16
