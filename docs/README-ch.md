@@ -11,7 +11,7 @@
 
 
 ## Project 目录结构
-
+```textarea
 -- .config                //项目配置文件
 -- build                  // 引用node modules 编译后的js目录
 -- public                 // 网站静态文件 html,png,css 等等
@@ -19,6 +19,7 @@
 -- src                    // 网站js module 
 ---- libs/i18n-common.js  //网站语言转换js(目前网站只用到这个模块),
 ---- index.js             //js module 管理入口
+```
 
 ### 中英文支持方式
 ```text
