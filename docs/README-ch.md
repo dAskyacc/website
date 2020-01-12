@@ -6,6 +6,10 @@
 
 > npm > 6
 
+> bootstrap 4
+
+
+
 ## Project 目录结构
 
 -- .config                //项目配置文件
@@ -16,6 +20,10 @@
 ---- libs/i18n-common.js  //网站语言转换js(目前网站只用到这个模块),
 ---- index.js             //js module 管理入口
 
+### 中英文支持方式
+```text
+在html标签中加入class="i18n" data-en="英文" date-cn="中文"
+```
 
 ### 开发运行
 
